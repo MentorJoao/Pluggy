@@ -1,3 +1,4 @@
+// api/token.ts
 import { VercelRequest, VercelResponse } from '@vercel/node'
 import { PluggyClient } from 'pluggy-sdk'
 
