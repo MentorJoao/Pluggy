@@ -9,9 +9,9 @@
     <main class="main"></main>
     <script src="https://cdn.pluggy.ai/pluggy-connect/v2.6.1/pluggy-connect.js"></script>
     <script>
-      // Use your own connect token API endpoint, this one only list sandbox connectors
-      // Example Reference: https://github.com/pluggyai/quickstart/tree/master/examples/vercel-node-connect-token
-      fetch('https://mentorjoao.github.io/Pluggy/token.ts', {
+      const { PluggyConnect } = window;
+
+      fetch('https://mentorjoao.github.io/Pluggy/api/token', {
         method: "POST",
         headers: {
           Accept: "application/json",
@@ -29,13 +29,9 @@
             connectToken: accessToken,
             includeSandbox: true,
             onSuccess: (itemData) => {
-              // TODO: Implement logic for succesful connection
-              // The following line is an example, it should be removed when implemented.
               console.log('Yay! Pluggy connect success!', itemData);
             },
             onError: (error) => {
-              // TODO: Implement logic for error on connection
-              // The following line is an example, it should be removed when implemented.
               console.error('Whoops! Pluggy Connect error... ', error);
             },
           });
@@ -44,3 +40,4 @@
     </script>
   </body>
 </html>
+
