@@ -11,33 +11,35 @@
     <script>
       const { PluggyConnect } = window;
 
-      fetch('https://mentorjoao.github.io/Pluggy/token.ts', {
-        method: "POST",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          options: {
-            clientUserId: "user@example.com"
-          }
-        })
-      })
-        .then((response) => response.json())
-        .then(({ accessToken }) => {
-          const pluggyConnect = new PluggyConnect({
-            connectToken: accessToken,
-            includeSandbox: true,
-            onSuccess: (itemData) => {
-              console.log('Yay! Pluggy connect success!', itemData);
-            },
-            onError: (error) => {
-              console.error('Whoops! Pluggy Connect error... ', error);
-            },
-          });
-          pluggyConnect.init();
+      // Função para obter parâmetros da URL
+      function getParameterByName(name, url) {
+        if (!url) url = window.location.href;
+        name = name.replace(/[\[\]]/g, "\\$&");
+        var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+            results = regex.exec(url);
+        if (!results) return null;
+        if (!results[2]) return '';
+        return decodeURIComponent(results[2].replace(/\+/g, " "));
+      }
+
+      // Obtenha o accessToken do parâmetro Connect na URL
+      const connectTokenParam = getParameterByName('connect');
+      if (!connectTokenParam) {
+        console.error('Parâmetro Connect não encontrado na URL.');
+      } else {
+        // Use o accessToken obtido
+        const pluggyConnect = new PluggyConnect({
+          connectToken: connectTokenParam,
+          includeSandbox: true,
+          onSuccess: (itemData) => {
+            console.log('Yay! Pluggy connect success!', itemData);
+          },
+          onError: (error) => {
+            console.error('Whoops! Pluggy Connect error... ', error);
+          },
         });
+        pluggyConnect.init();
+      }
     </script>
   </body>
 </html>
-
